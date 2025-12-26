@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uts_umey/detail_pesanan_screen.dart';
 import 'package:uts_umey/daftar_pesanan_screen.dart';
+import 'package:uts_umey/profil_screen.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -70,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final List<Widget> screens = [
       const DaftarPesananScreen(),
       _buildHomeContent(), // Extract existing home content
-      const Center(child: Text('Profil Screen Placeholder')),
+      const ProfilScreen(),
     ];
 
     return Scaffold(
