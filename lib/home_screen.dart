@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uts_umey/detail_pesanan_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -236,7 +237,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 // Pesan Button
                 GestureDetector(
                     onTap: () {
-                         // TODO: Implement Order Action
+                         Navigator.push(
+                           context,
+                           MaterialPageRoute(builder: (context) => const DetailPesananScreen()),
+                         );
                     },
                     child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
