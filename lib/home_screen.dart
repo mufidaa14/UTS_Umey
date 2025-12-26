@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:uts_umey/detail_pesanan_screen.dart';
+import 'package:uts_umey/daftar_pesanan_screen.dart';
+
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final int initialIndex;
+  const HomeScreen({super.key, this.initialIndex = 1}); // Default to Home if not specified
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 1; // Default to Home
+  late int _selectedIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.initialIndex;
+  }
 
   final List<Map<String, String>> products = [
     {
@@ -57,104 +66,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Define the screens for each tab
+    final List<Widget> screens = [
+      const DaftarPesananScreen(),
+      _buildHomeContent(), // Extract existing home content
+      const Center(child: Text('Profil Screen Placeholder')),
+    ];
+
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Header Section
-            Stack(
-              clipBehavior: Clip.none,
-              alignment: Alignment.bottomCenter,
-              children: [
-                // Header Image
-                SizedBox(
-                  width: double.infinity,
-                  height: 220, // Adjust height as needed
-                  child: Image.asset(
-                    'assets/header home.png',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                // Floating Welcome Card
-                Positioned(
-                  bottom: -30,
-                  left: 20,
-                  right: 20,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFE0E0E0), // Light grey like reference
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 10,
-                          offset: const Offset(0, 5),
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          'assets/logo.png', // Small logo inside card
-                          width: 40,
-                          height: 40,
-                        ),
-                        const SizedBox(width: 15),
-                        const Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Selamat Datang!',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              Text(
-                                'Siap mengelola jadwal produksi Anda hari ini',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.black87,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 50), // Space for floating card
-
-            // Product Grid
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: GridView.builder(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 15,
-                  mainAxisSpacing: 15,
-                  childAspectRatio: 0.75, // Adjust card aspect ratio
-                ),
-                itemCount: products.length,
-                itemBuilder: (context, index) {
-                  return _buildProductCard(products[index]);
-                },
-              ),
-            ),
-            const SizedBox(height: 20),
-          ],
-        ),
-      ),
+      body: screens[_selectedIndex], // Switch content based on index
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
@@ -174,6 +95,106 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(Icons.person_outline),
             label: 'Profil',
           ),
+        ],
+      ),
+    );
+  }
+
+  // Extracted Home Content
+  Widget _buildHomeContent() {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          // Header Section
+          Stack(
+            clipBehavior: Clip.none,
+            alignment: Alignment.bottomCenter,
+            children: [
+              // Header Image
+              SizedBox(
+                width: double.infinity,
+                height: 220, // Adjust height as needed
+                child: Image.asset(
+                  'assets/header home.png',
+                  fit: BoxFit.cover,
+                ),
+              ),
+              // Floating Welcome Card
+              Positioned(
+                bottom: -30,
+                left: 20,
+                right: 20,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFE0E0E0), // Light grey like reference
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 10,
+                        offset: const Offset(0, 5),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        'assets/logo.png', // Small logo inside card
+                        width: 40,
+                        height: 40,
+                      ),
+                      const SizedBox(width: 15),
+                      const Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Selamat Datang!',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            Text(
+                              'Siap mengelola jadwal produksi Anda hari ini',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.black87,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 50), // Space for floating card
+
+          // Product Grid
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: GridView.builder(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 15,
+                mainAxisSpacing: 15,
+                childAspectRatio: 0.75, // Adjust card aspect ratio
+              ),
+              itemCount: products.length,
+              itemBuilder: (context, index) {
+                return _buildProductCard(products[index]);
+              },
+            ),
+          ),
+          const SizedBox(height: 20),
         ],
       ),
     );
@@ -239,7 +260,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onTap: () {
                          Navigator.push(
                            context,
-                           MaterialPageRoute(builder: (context) => const DetailPesananScreen()),
+                           MaterialPageRoute(builder: (context) => DetailPesananScreen(productName: product['name']!)),
                          );
                     },
                     child: Container(

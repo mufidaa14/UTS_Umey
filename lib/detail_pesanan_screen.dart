@@ -1,7 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:uts_umey/home_screen.dart';
+import 'package:uts_umey/order_data.dart';
 
-class DetailPesananScreen extends StatelessWidget {
-  const DetailPesananScreen({super.key});
+
+class DetailPesananScreen extends StatefulWidget {
+  final String productName;
+  const DetailPesananScreen({super.key, required this.productName});
+
+  @override
+  State<DetailPesananScreen> createState() => _DetailPesananScreenState();
+}
+
+class _DetailPesananScreenState extends State<DetailPesananScreen> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _sizeController = TextEditingController();
+  final TextEditingController _qtyController = TextEditingController();
+  final TextEditingController _deadlineController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,24 +43,25 @@ class DetailPesananScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 20),
             
+
             // Nama Customer
             _buildLabel('Nama Customer'),
-            _buildTextField('Masukkan Nama Customer'),
+            _buildTextField('Masukkan Nama Customer', _nameController),
             const SizedBox(height: 24),
 
             // Ukuran
             _buildLabel('Ukuran'),
-            _buildTextField('Masukkan Ukuran'),
+            _buildTextField('Masukkan Ukuran', _sizeController),
             const SizedBox(height: 24),
 
             // Qty
             _buildLabel('Qty'),
-            _buildTextField('Masukkan Jumlah Pesanan'),
+            _buildTextField('Masukkan Jumlah Pesanan', _qtyController),
             const SizedBox(height: 24),
 
             // Tenggat
             _buildLabel('Tenggat'),
-            _buildTextField('Masukkan Tenggat Pemesanan'),
+            _buildTextField('Masukkan Tenggat Pemesanan', _deadlineController),
             const SizedBox(height: 60),
 
             // Check Out Button
@@ -56,7 +71,26 @@ class DetailPesananScreen extends StatelessWidget {
                 width: 150,
                 child: ElevatedButton(
                   onPressed: () {
-                    // TODO: Implement Checkout Action
+                    // Create new order
+                    final newOrder = Order(
+                      customerName: _nameController.text,
+                      productName: widget.productName,
+                      quantity: _qtyController.text,
+                      size: _sizeController.text,
+                      deadline: _deadlineController.text,
+                      date: DateTime.now().toString().substring(0, 10), // Simple date
+                    );
+
+                    // Add to global list
+                    orderList.add(newOrder);
+
+                    // Navigate to HomeScreen (which will show the list if we set index, or user can navigate)
+                    // We will navigate efficiently to HomeScreen.
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => const HomeScreen(initialIndex: 0)), // Go to Daftar Pesanan tab
+                      (route) => false,
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.grey[300], // Light grey button
@@ -95,8 +129,9 @@ class DetailPesananScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTextField(String hint) {
+  Widget _buildTextField(String hint, TextEditingController controller) {
     return TextField(
+      controller: controller,
       decoration: InputDecoration(
         hintText: hint,
         hintStyle: TextStyle(color: Colors.grey[400]),
