@@ -18,16 +18,16 @@ class LoginScreen extends StatelessWidget {
               children: [
                 // Header
                 const Text(
-                  'Hello Again!',
+                  'Selamat Datang!',
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    color: Colors.black87,
                   ),
                 ),
                 const SizedBox(height: 10),
                 const Text(
-                  "Welcome back you've been missed!",
+                  "Silakan masuk untuk melanjutkan",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 16,
@@ -37,36 +37,62 @@ class LoginScreen extends StatelessWidget {
                 const SizedBox(height: 50),
 
                 // Username Input
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[100],
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: const TextField(
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'User Name',
-                      prefixIcon: Icon(Icons.person_outline),
-                      contentPadding: EdgeInsets.symmetric(vertical: 15),
+                TextField(
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.grey[100],
+                    labelText: 'Nama Pengguna',
+                    labelStyle: const TextStyle(color: Colors.grey),
+                    floatingLabelStyle: const TextStyle(color: Colors.black),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide.none,
                     ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide.none,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: const BorderSide(color: Colors.black, width: 2),
+                    ),
+                    prefixIcon: const Icon(Icons.person_outline),
+                    prefixIconColor: WidgetStateColor.resolveWith((states) =>
+                        states.contains(WidgetState.focused)
+                            ? Colors.black
+                            : Colors.grey),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                   ),
                 ),
                 const SizedBox(height: 20),
 
                 // Password Input
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[100],
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: const TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Password',
-                      prefixIcon: Icon(Icons.lock_outline),
-                      contentPadding: EdgeInsets.symmetric(vertical: 15),
+                TextField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.grey[100],
+                    labelText: 'Kata Sandi',
+                    labelStyle: const TextStyle(color: Colors.grey),
+                    floatingLabelStyle: const TextStyle(color: Colors.black),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide.none,
                     ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide.none,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: const BorderSide(color: Colors.black, width: 2),
+                    ),
+                    prefixIcon: const Icon(Icons.lock_outline),
+                    prefixIconColor: WidgetStateColor.resolveWith((states) =>
+                        states.contains(WidgetState.focused)
+                            ? Colors.black
+                            : Colors.grey),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                   ),
                 ),
                 const SizedBox(height: 40),
@@ -76,25 +102,31 @@ class LoginScreen extends StatelessWidget {
                   width: double.infinity,
                   height: 55,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFE53935), // Red color
                     borderRadius: BorderRadius.circular(15),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFFE53935).withOpacity(0.3),
-                        blurRadius: 10,
-                        offset: const Offset(0, 5),
+                        color: const Color(0xFFE53935).withOpacity(0.4),
+                        blurRadius: 15,
+                        offset: const Offset(0, 8),
                       ),
                     ],
                   ),
-                  child: TextButton(
+                  child: ElevatedButton(
                     onPressed: () {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => const HomeScreen()),
                       );
                     },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFE53935), // Red color
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      elevation: 0, // Disable default elevation to use custom shadow
+                    ),
                     child: const Text(
-                      'Login',
+                      'Masuk',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -110,8 +142,8 @@ class LoginScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      'Not a member? ',
-                      style: TextStyle(color: Colors.black),
+                      'Belum punya akun? ',
+                      style: TextStyle(color: Colors.black54),
                     ),
                     GestureDetector(
                       onTap: () {
@@ -123,9 +155,9 @@ class LoginScreen extends StatelessWidget {
                         );
                       },
                       child: const Text(
-                        'Register now',
+                        'Daftar Sekarang',
                         style: TextStyle(
-                          color: Colors.blue,
+                          color: Color(0xFFE53935),
                           fontWeight: FontWeight.bold,
                         ),
                       ),

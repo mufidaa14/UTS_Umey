@@ -25,87 +25,136 @@ class _DetailPesananScreenState extends State<DetailPesananScreen> {
         title: const Text(
           'Detail Pesanan',
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.black87,
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: const Color(0xFFFFC0CB), // Soft pink
+        backgroundColor: Colors.white,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
-        ),
+        centerTitle: true,
+        iconTheme: const IconThemeData(color: Colors.black87),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 20),
-            
+            const Center(
+              child: Text(
+                'Lengkapi Pesanan',
+                style: TextStyle(
+                  fontSize: 20, // Reduced from 24
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+              ),
+            ),
+            const SizedBox(height: 6), // Reduced from 8
+            const Center(
+              child: Text(
+                'Isi detail pesanan pelanggan di bawah ini.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 13, // Reduced from 16
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+            const SizedBox(height: 24), // Reduced from 40
 
             // Nama Customer
-            _buildLabel('Nama Customer'),
-            _buildTextField('Masukkan Nama Customer', _nameController),
-            const SizedBox(height: 24),
+            _buildModernTextField(
+              controller: _nameController,
+              label: 'Nama Customer',
+              icon: Icons.person_outline,
+            ),
+            const SizedBox(height: 16), // Reduced from 20
 
             // Ukuran
-            _buildLabel('Ukuran'),
-            _buildTextField('Masukkan Ukuran', _sizeController),
-            const SizedBox(height: 24),
+            _buildModernTextField(
+              controller: _sizeController,
+              label: 'Ukuran',
+              icon: Icons.format_size,
+            ),
+            const SizedBox(height: 16), // Reduced from 20
 
             // Qty
-            _buildLabel('Qty'),
-            _buildTextField('Masukkan Jumlah Pesanan', _qtyController),
-            const SizedBox(height: 24),
+            _buildModernTextField(
+              controller: _qtyController,
+              label: 'Jumlah (Qty)',
+              icon: Icons.shopping_bag_outlined,
+              keyboardType: TextInputType.number,
+            ),
+            const SizedBox(height: 16), // Reduced from 20
 
             // Tenggat
-            _buildLabel('Tenggat'),
-            _buildTextField('Masukkan Tenggat Pemesanan', _deadlineController),
-            const SizedBox(height: 60),
+            _buildModernTextField(
+              controller: _deadlineController,
+              label: 'Tenggat Pemesanan',
+              icon: Icons.calendar_today_outlined,
+            ),
+            const SizedBox(height: 40), // Reduced from 60
 
             // Check Out Button
-            Center(
-              child: SizedBox(
-                height: 45,
-                width: 150,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Create new order
-                    final newOrder = Order(
-                      customerName: _nameController.text,
-                      productName: widget.productName,
-                      quantity: _qtyController.text,
-                      size: _sizeController.text,
-                      deadline: _deadlineController.text,
-                      date: DateTime.now().toString().substring(0, 10), // Simple date
-                    );
-
-                    // Add to global list
-                    orderList.add(newOrder);
-
-                    // Navigate to HomeScreen (which will show the list if we set index, or user can navigate)
-                    // We will navigate efficiently to HomeScreen.
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => const HomeScreen(initialIndex: 0)), // Go to Daftar Pesanan tab
-                      (route) => false,
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey[300], // Light grey button
-                    foregroundColor: Colors.black, // Text color
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
+            Container(
+              width: double.infinity,
+              height: 45, // Reduced from 55
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12), // Reduced from 15
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFFE53935).withOpacity(0.4),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
                   ),
-                  child: const Text(
-                    'Chek Out', // Matching the reference image text exactly
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
+                ],
+              ),
+              child: ElevatedButton(
+                onPressed: () {
+                  if (_nameController.text.isEmpty ||
+                      _sizeController.text.isEmpty ||
+                      _qtyController.text.isEmpty ||
+                      _deadlineController.text.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Harap isi semua kolom')),
+                    );
+                    return;
+                  }
+
+                  // Create new order
+                  final newOrder = Order(
+                    customerName: _nameController.text,
+                    productName: widget.productName,
+                    quantity: _qtyController.text,
+                    size: _sizeController.text,
+                    deadline: _deadlineController.text,
+                    date: DateTime.now().toString().substring(0, 10),
+                  );
+
+                  // Add to global list
+                  orderList.add(newOrder);
+
+                  // Navigate to HomeScreen
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const HomeScreen(initialIndex: 0)),
+                    (route) => false,
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFE53935), // Red color
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12), // Reduced from 15
+                  ),
+                  elevation: 0,
+                ),
+                child: const Text(
+                  'Check Out',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16, // Reduced from 18
                   ),
                 ),
               ),
@@ -116,33 +165,38 @@ class _DetailPesananScreenState extends State<DetailPesananScreen> {
     );
   }
 
-  Widget _buildLabel(String text) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
-      child: Text(
-        text,
-        style: const TextStyle(
-          fontSize: 16,
-          color: Colors.black,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTextField(String hint, TextEditingController controller) {
+  Widget _buildModernTextField({
+    required TextEditingController controller,
+    required String label,
+    required IconData icon,
+    TextInputType keyboardType = TextInputType.text,
+  }) {
     return TextField(
       controller: controller,
+      keyboardType: keyboardType,
+      style: const TextStyle(fontSize: 14), // Smaller text input
       decoration: InputDecoration(
-        hintText: hint,
-        hintStyle: TextStyle(color: Colors.grey[400]),
-        enabledBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.black),
+        filled: true,
+        fillColor: Colors.grey[100],
+        labelText: label,
+        labelStyle: const TextStyle(color: Colors.grey, fontSize: 13), // Smaller label
+        floatingLabelStyle: const TextStyle(color: Colors.black),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12), // Reduced from 15
+          borderSide: BorderSide.none,
         ),
-        focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.black, width: 2),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
         ),
-        contentPadding: const EdgeInsets.symmetric(vertical: 8),
-        isDense: true,
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.black, width: 1.5), // Slightly thinner border
+        ),
+        prefixIcon: Icon(icon, size: 20), // Smaller Icon
+        prefixIconColor: WidgetStateColor.resolveWith((states) =>
+            states.contains(WidgetState.focused) ? Colors.black : Colors.grey),
+        contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16), // Reduced padding
       ),
     );
   }

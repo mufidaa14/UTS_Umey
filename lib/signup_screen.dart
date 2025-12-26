@@ -17,16 +17,16 @@ class SignUpScreen extends StatelessWidget {
               children: [
                 // Header
                 const Text(
-                  'Sign Up',
+                  'Daftar Akun',
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    color: Colors.black87,
                   ),
                 ),
                 const SizedBox(height: 10),
                 const Text(
-                  "Welcome back you've been missed!",
+                  "Lengkapi data diri Anda",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 16,
@@ -36,36 +36,62 @@ class SignUpScreen extends StatelessWidget {
                 const SizedBox(height: 50),
 
                 // Username Input
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[100],
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: const TextField(
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'User Name',
-                      prefixIcon: Icon(Icons.person_outline),
-                      contentPadding: EdgeInsets.symmetric(vertical: 15),
+                TextField(
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.grey[100],
+                    labelText: 'Nama Pengguna',
+                    labelStyle: const TextStyle(color: Colors.grey),
+                    floatingLabelStyle: const TextStyle(color: Colors.black),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide.none,
                     ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide.none,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: const BorderSide(color: Colors.black, width: 2),
+                    ),
+                    prefixIcon: const Icon(Icons.person_outline),
+                    prefixIconColor: WidgetStateColor.resolveWith((states) =>
+                        states.contains(WidgetState.focused)
+                            ? Colors.black
+                            : Colors.grey),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                   ),
                 ),
                 const SizedBox(height: 20),
 
                 // Password Input
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[100],
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: const TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Password',
-                      prefixIcon: Icon(Icons.lock_outline),
-                      contentPadding: EdgeInsets.symmetric(vertical: 15),
+                TextField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.grey[100],
+                    labelText: 'Kata Sandi',
+                    labelStyle: const TextStyle(color: Colors.grey),
+                    floatingLabelStyle: const TextStyle(color: Colors.black),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide.none,
                     ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide.none,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: const BorderSide(color: Colors.black, width: 2),
+                    ),
+                    prefixIcon: const Icon(Icons.lock_outline),
+                    prefixIconColor: WidgetStateColor.resolveWith((states) =>
+                        states.contains(WidgetState.focused)
+                            ? Colors.black
+                            : Colors.grey),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                   ),
                 ),
                 const SizedBox(height: 40),
@@ -75,25 +101,31 @@ class SignUpScreen extends StatelessWidget {
                   width: double.infinity,
                   height: 55,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFE53935), // Red color
                     borderRadius: BorderRadius.circular(15),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFFE53935).withOpacity(0.3),
-                        blurRadius: 10,
-                        offset: const Offset(0, 5),
+                        color: const Color(0xFFE53935).withOpacity(0.4),
+                        blurRadius: 15,
+                        offset: const Offset(0, 8),
                       ),
                     ],
                   ),
-                  child: TextButton(
+                  child: ElevatedButton(
                     onPressed: () {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => const HomeScreen()),
                       );
                     },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFE53935), // Red color
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      elevation: 0,
+                    ),
                     child: const Text(
-                      'Sign Up',
+                      'Daftar',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -103,28 +135,23 @@ class SignUpScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 30),
-                
-                 // Back to Login (Optional, usually needed)
-                 // The wireframe doesn't show a footer for Sign Up, but it's good UX.
-                 // I will leave it blank if not in wireframe, or provide a way back.
-                 // The constraints say "Jangan menambah... fitur baru".
-                 // But standard navigation is needed.
-                 // I'll add a simple "Already a member? Login" similar to the login page but reversed.
-                 Row(
+
+                // Back to Login
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      'Already a member? ',
-                      style: TextStyle(color: Colors.black),
+                      'Sudah punya akun? ',
+                      style: TextStyle(color: Colors.black54),
                     ),
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context);
                       },
                       child: const Text(
-                        'Login',
+                        'Masuk',
                         style: TextStyle(
-                          color: Colors.blue,
+                          color: Color(0xFFE53935),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
