@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uts_umey/signup_screen.dart';
+import 'package:uts_umey/home_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -87,7 +88,10 @@ class LoginScreen extends StatelessWidget {
                   ),
                   child: TextButton(
                     onPressed: () {
-                      // TODO: Implement Login Action
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const HomeScreen()),
+                      );
                     },
                     child: const Text(
                       'Login',

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uts_umey/home_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
@@ -86,21 +87,12 @@ class SignUpScreen extends StatelessWidget {
                   ),
                   child: TextButton(
                     onPressed: () {
-                      // TODO: Implement Sign Up Action
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const HomeScreen()),
+                      );
                     },
                     child: const Text(
-                      'Login', // Keeping the label 'Login' as requested by the user's constraint or image, though 'Sign Up' would be more logical. Checking image... 
-                      // Wait, the image says 'Login' on the button for Sign Up page? 
-                      // Let me re-check the image 1.
-                      // Image 1, "sign up" screen, button says "Login".
-                      // Wait, that might be a mistake in the wireframe or I should follow it literally?
-                      // User said "Jangan ubah bahasa teks yang sudah ada."
-                      // User also said "Teks halaman Sign Up disesuaikan dengan konteks pendaftaran (bukan copy Login)."
-                      // So I should probably use 'Sign Up' or 'Register' if the user wants context adjustment.
-                      // However, the wireframe clearly shows 'Login' on the red button in the Sign Up column.
-                      // BUT, usually it should be Sign Up.
-                      // Let's look at the user prompt: "Teks halaman Sign Up disesuaikan dengan konteks pendaftaran (bukan copy Login)."
-                      // OK, I will change the button text to 'Sign Up' to be correct contextually.
                       'Sign Up',
                       style: TextStyle(
                         color: Colors.white,
