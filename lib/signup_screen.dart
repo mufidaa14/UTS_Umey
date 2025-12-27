@@ -19,17 +19,17 @@ class SignUpScreen extends StatelessWidget {
                 const Text(
                   'Daftar Akun',
                   style: TextStyle(
-                    fontSize: 32,
+                    fontSize: 25, // Updated to match Login
                     fontWeight: FontWeight.bold,
                     color: Colors.black87,
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 5), // Reduced from 10
                 const Text(
                   "Lengkapi data diri Anda",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 13, // Reduced from 16
                     color: Colors.grey,
                   ),
                 ),
@@ -63,7 +63,7 @@ class SignUpScreen extends StatelessWidget {
                     contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10), // Reduced from 20 to match Login
 
                 // Password Input
                 TextField(
@@ -99,7 +99,7 @@ class SignUpScreen extends StatelessWidget {
                 // Sign Up Button
                 Container(
                   width: double.infinity,
-                  height: 55,
+                  height: 40, // Reduced from 55
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                     boxShadow: [
@@ -128,13 +128,13 @@ class SignUpScreen extends StatelessWidget {
                       'Daftar',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 18,
+                        fontSize: 15, // Reduced from 18
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 15), // Reduced from 30
 
                 // Back to Login
                 Row(

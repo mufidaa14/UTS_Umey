@@ -20,17 +20,17 @@ class LoginScreen extends StatelessWidget {
                 const Text(
                   'Selamat Datang!',
                   style: TextStyle(
-                    fontSize: 32,
+                    fontSize: 25,
                     fontWeight: FontWeight.bold,
                     color: Colors.black87,
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 5),
                 const Text(
                   "Silakan masuk untuk melanjutkan",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 13,
                     color: Colors.grey,
                   ),
                 ),
@@ -64,7 +64,7 @@ class LoginScreen extends StatelessWidget {
                     contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
 
                 // Password Input
                 TextField(
@@ -100,7 +100,7 @@ class LoginScreen extends StatelessWidget {
                 // Login Button
                 Container(
                   width: double.infinity,
-                  height: 55,
+                  height: 40,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                     boxShadow: [
@@ -129,13 +129,13 @@ class LoginScreen extends StatelessWidget {
                       'Masuk',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 18,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 15),
 
                 // Register Link
                 Row(

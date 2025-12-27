@@ -6,7 +6,7 @@ class ProfilScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[50], // Slightly off-white background
       appBar: AppBar(
         title: const Text(
           'Profil',
@@ -15,132 +15,189 @@ class ProfilScreen extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: const Color(0xFFFFC0CB), // Soft Pink
+        backgroundColor: const Color(0xFFFFD6E0), // Soft Pink #FFD6E0
         elevation: 0,
-        automaticallyImplyLeading: false, 
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Profile Image Section
+            // Header Profile
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 40),
-              color: Colors.grey[300], // Light grey background
-              child: Center(
-                child: Container(
-                  width: 120,
-                  height: 120,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.transparent, 
-                  ),
-                  child: ClipOval(
-                    child: Image.asset(
-                      'assets/profile.png',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+              padding: const EdgeInsets.symmetric(vertical: 32),
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color(0xFFFFD6E0), // Start with AppBar color
+                    Colors.white,      // Fade to white
+                  ],
                 ),
               ),
-            ),
-            
-            Padding(
-              padding: const EdgeInsets.all(24.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Identitas Section
-                  _buildSectionHeader('Identitas'),
-                  const SizedBox(height: 10),
-                  _buildInfoItem('Nama Lengkap', 'Royhatul Jannatul Mufida', boldValue: true),
-                  const SizedBox(height: 20),
-                  _buildInfoItem('Jenis Kelamin', 'Perempuan'),
-                  const SizedBox(height: 40),
-
-                  // Kontak Section
-                  _buildSectionHeader('Kontak'),
-                  const SizedBox(height: 10),
-                  _buildContactItem(Icons.email_outlined, 'Alamat Email', 'fdaate14@gmail.com'),
-                  const SizedBox(height: 20),
-                  _buildContactItem(Icons.phone_android, 'Handphone', '087********'),
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white, width: 4),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 10,
+                          offset: const Offset(0, 5),
+                        ),
+                      ],
+                    ),
+                    child: const CircleAvatar(
+                      radius: 50,
+                      backgroundColor: Colors.white,
+                      backgroundImage: AssetImage('assets/profile.png'),
+                      // Fallback if image fails to load or for placeholder
+                      // child: Icon(Icons.person, size: 50, color: Colors.grey),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  const Text(
+                    'Royhatul Jannatul Mufida',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  ),
                 ],
               ),
             ),
+
+            // Section Identitas
+            _buildInfoCard(
+              title: 'Identitas',
+              children: [
+                _buildListTile(
+                  icon: Icons.badge_outlined,
+                  label: 'Nama Lengkap',
+                  value: 'Royhatul Jannatul Mufida',
+                ),
+                _buildListTile(
+                  icon: Icons.wc,
+                  label: 'Jenis Kelamin',
+                  value: 'Perempuan',
+                ),
+              ],
+            ),
+
+            // Section Kontak
+            _buildInfoCard(
+              title: 'Kontak',
+              children: [
+                _buildListTile(
+                  icon: Icons.email_outlined,
+                  label: 'Alamat Email',
+                  value: 'fdaate14@gmail.com',
+                ),
+                _buildListTile(
+                  icon: Icons.phone_android,
+                  label: 'Handphone',
+                  value: '087********',
+                ),
+              ],
+            ),
+            
+            const SizedBox(height: 20),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildSectionHeader(String title) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
+  Widget _buildInfoCard({required String title, required List<Widget> children}) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 10,
+            offset: const Offset(0, 4),
           ),
-        ),
-        const SizedBox(height: 5),
-        const Divider(color: Colors.black, thickness: 1),
-      ],
-    );
-  }
-
-  Widget _buildInfoItem(String label, String value, {bool boldValue = false}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 14,
-            color: Colors.grey,
-          ),
-        ),
-        const SizedBox(height: 5),
-        Text(
-          value,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: boldValue ? FontWeight.bold : FontWeight.normal,
-            color: Colors.black,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildContactItem(IconData icon, String label, String value) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Icon(icon, size: 30, color: Colors.black),
-        const SizedBox(width: 15),
-        Column(
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              label,
+              title,
               style: const TextStyle(
-                fontSize: 14,
-                color: Colors.grey,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
               ),
             ),
-            Text(
-              value,
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.black,
-              ),
-            ),
+            const SizedBox(height: 8),
+            const Divider(height: 1, thickness: 1, color: Colors.grey),
+            const SizedBox(height: 8),
+            ...children,
           ],
         ),
-      ],
+      ),
+    );
+  }
+
+  Widget _buildListTile({
+    required IconData icon,
+    required String label,
+    required String value,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.pink[50],
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(icon, color: Colors.pink[300], size: 24),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[600],
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  value,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black87,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
